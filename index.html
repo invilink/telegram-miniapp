@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Анкета</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    input, button { margin-top: 10px; padding: 10px; width: 100%; box-sizing: border-box; }
+  </style>
+</head>
+<body>
+  <h2>Добавьте информацию</h2>
+  <input id="name" placeholder="Имя" />
+  <input id="age" placeholder="Возраст" />
+  <input id="city" placeholder="Город" />
+  <button onclick="sendData()">Отправить</button>
+
+  <script>
+    function sendData() {
+      const data = {
+        name: document.getElementById("name").value,
+        age: document.getElementById("age").value,
+        city: document.getElementById("city").value
+      };
+      Telegram.WebApp.sendData(JSON.stringify(data));
+      Telegram.WebApp.close();
+    }
+  </script>
+</body>
+</html>
