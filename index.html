@@ -4,60 +4,103 @@
   <meta charset="UTF-8">
   <title>Анкета</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
       --bg-color: #ffffff;
       --text-color: #000000;
-      --input-bg: #f0f0f0;
+      --hint-color: #888;
+      --input-bg: #f3f3f3;
+      --button-bg: #4CAF50;
+      --button-text: #ffffff;
     }
 
     html[data-theme='dark'] {
       --bg-color: #1e1e1e;
       --text-color: #ffffff;
+      --hint-color: #aaa;
       --input-bg: #2c2c2c;
+      --button-bg: #2ea862;
     }
 
     body {
       background-color: var(--bg-color);
       color: var(--text-color);
-      font-family: sans-serif;
-      padding: 20px;
-    }
-
-    input, button {
-      margin-top: 10px;
-      padding: 12px;
-      width: 100%;
-      box-sizing: border-box;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-      background-color: var(--input-bg);
-      color: var(--text-color);
-    }
-
-    button {
-      background-color: #4CAF50;
-      color: white;
-      font-weight: bold;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 16px;
     }
 
     h2 {
-      margin-bottom: 10px;
+      font-size: 18px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input {
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background-color: var(--input-bg);
+      font-size: 16px;
+      color: var(--text-color);
+    }
+
+    input::placeholder {
+      color: var(--hint-color);
+    }
+
+    button {
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    button:active {
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
     }
   </style>
 </head>
 <body>
-  <h2>Добавьте информацию</h2>
-  <input id="name" placeholder="Имя" />
-  <input id="age" placeholder="Возраст" />
-  <input id="city" placeholder="Город" />
-  <button onclick="sendData()">Отправить</button>
+  <div class="container">
+    <h2>Заполните анкету</h2>
+    <div class="form-group">
+      <input id="name" placeholder="Имя" />
+      <input id="age" placeholder="Возраст" type="number" />
+      <input id="city" placeholder="Город" />
+      <button onclick="sendData()">Отправить</button>
+    </div>
+  </div>
 
   <script>
-    // Обработка темы Telegram
     if (Telegram.WebApp.colorScheme === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    // Применяем кастомную тему Telegram (если есть)
+    const theme = Telegram.WebApp.themeParams || {};
+    if (theme.button_color) {
+      document.documentElement.style.setProperty('--button-bg', theme.button_color);
+    }
+    if (theme.button_text_color) {
+      document.documentElement.style.setProperty('--button-text', theme.button_text_color);
     }
 
     function sendData() {
